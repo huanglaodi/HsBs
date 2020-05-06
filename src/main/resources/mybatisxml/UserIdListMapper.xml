@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.UserIdListMapper">
+    
+    <resultMap id="useridlistmapper" type="com.hs.Device.model.UserIdList" >
+        <id column="useridlistid" property="useridlistid"/>
+        <result column="usergetid" property="usergetid"/>
+        <result column="pkid" property="pkid"/>
+        <result column="userscount" property="userscount"/>
+        <result column="name"  property="name"/>
+        <result column="userId"  property="userId"/>
+        <result column="oneuseridsize"  property="oneuseridsize"/>
+        <result column="useridarray"  property="useridarray"/>
+        <result column="data"  property="data"/>
+    </resultMap>
+    
+    <select id="selectbygetid" resultMap="useridlistmapper">
+       select * from useridlist where usergetid=#{usergetid};
+    </select>
+    
+    <select id="selectbypkid" resultMap="useridlistmapper">
+       select * from useridlist where pkid=#{pkid};
+    </select>
+    
+    <insert id="insertuserids" keyProperty="useridlist.useridlistid" useGeneratedKeys="true" parameterType="com.hs.Device.model.UserIdList">
+       insert into useridlist (usergetid,pkid,userscount,name,userId,oneuseridsize,useridarray,data) values(#{useridlist.usergetid},#{useridlist.pkid},#{useridlist.userscount},
+       #{useridlist.name},#{useridlist.userId},#{useridlist.oneuseridsize},#{useridlist.useridarray},#{useridlist.data});
+    </insert>
+
+    
+</mapper>

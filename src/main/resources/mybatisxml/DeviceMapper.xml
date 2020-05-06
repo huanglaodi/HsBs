@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.DeviceMapper">
+
+	<resultMap id="devicemapper"
+		type="com.hs.Device.model.Device">
+		<id column="deviceid" property="deviceid" />
+		<result column="devid" property="devid" />
+		<result column="devname" property="devname" />
+		<result column="isonline" property="isonline" />
+		<result column="lasttime" property="lasttime" />
+		<result column="model" property="model" />
+		<result column="fktime" property="fktime" />
+		<result column="facedataver" property="facedataver" />
+		<result column="firmware" property="firmware" />
+		<result column="firmwarefilename" property="firmwarefilename" />
+		<result column="fkbindatalib" property="fkbindatalib" />
+		<result column="fpdataver" property="fpdataver" />
+		<result column="support" property="support" />
+	</resultMap>
+
+	<select id="selectAllDevice" resultMap="devicemapper">
+		select * from device;
+	</select>
+
+	<select id="selectdevicebyid" resultMap="devicemapper">
+		select * from device d where d.devid=#{devid};
+	</select>
+
+	<insert id="insertdevice" keyProperty="device.deviceid"
+		useGeneratedKeys="true" parameterType="com.hs.Device.model.Device">
+		insert into device
+		(devid,devname,isonline,lasttime,model,fktime,facedataver,firmware,firmwarefilename,fkbindatalib,fpdataver,support)
+		values(#{device.devid},#{device.devname},#{device.isonline},#{device.lasttime},#{device.model},#{device.fktime},#{device.facedataver},#{device.firmware}
+		,#{device.firmwarefilename},#{device.fkbindatalib},#{device.fpdataver},#{device.support});
+	</insert>
+
+     <update id="updatedevice" parameterType="com.hs.Device.model.Device">
+        update device d
+        <set>
+          <if test="device.devid!= null">
+             d.devid= #{device.devid},
+          </if>
+          <if test="device.devname!= null">
+             d.devname= #{device.devname},
+          </if>
+          <if test="device.isonline!= null">
+             d.isonline= #{device.isonline},
+          </if>
+          <if test="device.lasttime != null">
+             d.lasttime= #{device.lasttime},
+          </if>
+          <if test="device.model!= null">
+             d.model= #{device.model},
+          </if>
+          <if test="device.fktime!= null">
+             d.fktime= #{device.fktime},
+          </if>
+          <if test="device.facedataver!= null">
+             d.facedataver= #{device.facedataver},
+          </if>
+          <if test="device.firmware!= null">
+             d.firmware= #{device.firmware},
+          </if>
+          <if test="device.firmwarefilename!= null">
+             d.firmwarefilename= #{device.firmwarefilename},
+          </if>
+          <if test="device.fkbindatalib!= null">
+             d.fkbindatalib= #{device.fkbindatalib},
+          </if>
+          <if test="device.fpdataver!= null">
+             d.fpdataver= #{device.fpdataver},
+          </if>
+          <if test="device.support != null">
+             d.support= #{device.support}
+          </if>
+        </set>
+         where d.devid = #{device.devid};
+     </update>
+
+</mapper>

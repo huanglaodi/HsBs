@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.TimeZoneMapper">
+    
+    <resultMap id="timezonemapper" type="com.hs.Device.model.TimeZone" >
+        <id column="timezoneid" property="timezoneid"/>
+        <result column="usersendid" property="usersendid"/>
+        <result column="usergetid" property="usergetid"/>
+        <result column="timezoneno" property="timezoneno"/>
+        <result column="t1" property="t1"/>
+        <result column="t2" property="t2"/>
+        <result column="t3" property="t3"/>
+        <result column="t4" property="t4"/>
+        <result column="t5" property="t5"/>
+        <result column="t6" property="t6"/>
+    </resultMap >
+    
+ <insert id="inserttimezone" keyProperty="timezone.timezoneid" useGeneratedKeys="true" parameterType="com.hs.Device.model.TimeZone">
+     insert into timezone (usersendid,usergetid,timezoneno,t1,t2,t3,t4,t5,t6) values(#{timezone.usersendid},#{timezone.usergetid},#{timezone.timezoneno},#{timezone.t1}
+     ,#{timezone.t2},#{timezone.t3},#{timezone.t4},#{timezone.t5},#{timezone.t6});
+ </insert>
+
+<select id="selectbysendid" resultMap="timezonemapper">
+   select * from timezone where usersendid = #{usersendid};
+</select>
+
+<select id="selectbygetid" resultMap="timezonemapper">
+   select * from timezone where usergetid = #{usergetid};
+</select>
+    
+</mapper>

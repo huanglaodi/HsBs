@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.DeviceLogMapper">
+    
+    <resultMap id="devicelogmapper" type="com.hs.Device.model.DeviceLog" >
+        <id column="devicelogid" property="devicelogid"/>
+         <result column="usergetid" property="usergetid"/>
+         <result column="pkid" property="pkid"/>
+        <result column="devid" property="devid"/>
+        <result column="userid" property="userid"/>
+        <result column="verifymode" property="verifymode"/>
+        <result column="iomode" property="iomode"/>
+        <result column="iotime" property="iotime"/>
+        <result column="logimage" property="logimage"/>
+        <result column="fkbindatalib" property="fkbindatalib"/>
+        <result column="data" property="data"/>
+        <result column="inouts" property="inouts"/>
+        <result column="doorMode" property="doorMode"/>
+        <result column="logphoto" property="logphoto"/>
+        <result column="logcount" property="logcount"/>
+        <result column="onelogsize" property="onelogsize"/>
+        <result column="logarray" property="logarray"/>
+    </resultMap>
+    
+    <!--上传考勤-->
+    <insert id="insertlog" useGeneratedKeys="true" keyProperty="devicelog.devicelogid" parameterType="com.hs.Device.model.DeviceLog">
+     insert into devicelog (usergetid,pkid,devid,userid,verifymode,iomode,iotime,logimage,fkbindatalib,data,inouts,doorMode,logphoto,logcount,onelogsize,logarray) 
+     values(#{devicelog.usergetid},#{devicelog.pkid},#{devicelog.devid},#{devicelog.userid},#{devicelog.verifymode},#{devicelog.iomode},#{devicelog.iotime},
+     #{devicelog.logimage},#{devicelog.fkbindatalib},#{devicelog.data},#{devicelog.inouts},#{devicelog.doorMode},#{devicelog.logphoto},#{devicelog.logcount},#{devicelog.onelogsize},#{devicelog.logarray});
+   </insert>
+   
+    
+	 <select id="getlogbygetid" resultMap="devicelogmapper" >
+	   select * from devicelog dl where dl.usergetid=#{usergetid};
+	</select>
+	
+	 <select id="getlogbypkid" resultMap="devicelogmapper" >
+	   select * from devicelog dl where dl.pkid=#{pkid};
+	</select>
+	
+	<delete id="deletealllog">
+	   delete from devicelog where devid=#{devid};
+	</delete>
+	
+	<select id="loglist" resultMap="devicelogmapper">
+	   select * from devicelog where devid=#{devid};
+	</select>
+    
+</mapper>

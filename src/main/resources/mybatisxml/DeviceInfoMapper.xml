@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.DeviceInfoMapper">
+    
+    <resultMap id="devicemapper" type="com.hs.Device.model.DeviceInfo" >
+        <id column="deviceid" property="deviceid"/>
+        <result column="usergetid" property="usergetid"/>
+        <result column="devid" property="devid"/>
+        <result column="devmodel" property="devmodel"/>
+        <result column="token" property="token"/>
+        <result column="devname" property="devname"/>
+        <result column="firmware" property="firmware"/>
+        <result column="fpver" property="fpver"/>
+        <result column="facever" property="facever"/>
+        <result column="pvver" property="pvver"/>
+        <result column="maxbufferlen" property="maxbufferlen"/>
+        <result column="userlimit" property="userlimit"/>
+        <result column="fplimit" property="fplimit"/>
+        <result column="facelimit" property="facelimit"/>
+        <result column="pwdlimit" property="pwdlimit"/>
+        <result column="cardlimit" property="cardlimit"/>
+        <result column="loglimit" property="loglimit"/>
+        <result column="usercount" property="usercount"/>
+        <result column="managercount" property="managercount"/>
+        <result column="fpcount" property="fpcount"/>
+        <result column="facecount" property="facecount"/>
+        <result column="pwdcount" property="pwdcount"/>
+        <result column="cardcount" property="cardcount"/>
+        <result column="logcount" property="logcount"/>
+        <result column="allLogCount" property="allLogCount"/>
+        <result column="isonline" property="isonline"/>
+        <result column="lasttime" property="lasttime"/>
+    </resultMap>
+    
+    <select id="selectAllDevice" resultMap="devicemapper">
+        select * from deviceinfo;
+    </select>
+  
+    <select id="selectdevicebyid" resultMap="devicemapper">
+       select * from deviceinfo where devid=#{devid};
+    </select>
+    
+    
+    <select id="selectbygetid" resultMap="devicemapper">
+       select * from deviceinfo di where di.usergetid=#{usergetid};
+    </select>
+    
+    <insert id="insertdevice" keyProperty="device.deviceid" useGeneratedKeys="true" parameterType="com.hs.Device.model.DeviceInfo">
+       insert into deviceinfo (usergetid,devid,devmodel,token,devname,firmware,fpver,facever,pvver,maxbufferlen,userlimit,fplimit,facelimit,pwdlimit,
+       cardlimit,loglimit,usercount,managercount,fpcount,facecount,pwdcount,cardcount,logcount,allLogCount,isonline,lasttime) values(#{device.usergetid},#{device.devid},#{device.devmodel},#{device.token},#{device.devname},
+       #{device.firmware},#{device.fpver},#{device.facever},#{device.pvver},#{device.maxbufferlen},#{device.userlimit},#{device.fplimit},#{device.facelimit},#{device.pwdlimit},
+       #{device.cardlimit},#{device.loglimit},#{device.usercount},#{device.managercount},#{device.fpcount}, #{device.facecount},#{device.pwdcount},#{device.cardcount},#{device.logcount},#{device.allLogCount},#{device.isonline},#{device.lasttime});
+    </insert>
+    
+    <select id="selectbydevid" resultMap="devicemapper">
+       select * from deviceinfo where deviceid = (select max(deviceid) from deviceinfo where devid=#{devid});
+    </select>
+
+    
+</mapper>

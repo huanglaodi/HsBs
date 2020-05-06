@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.DeviceEnrollArrayMapper">
+    
+    <resultMap id="deviceEnrollMapper" type="com.hs.Device.model.DeviceEnrollArray" >
+        <id column="enrollarrayid" property="enrollarrayid"/>
+        <result column="backupnumber" property="backupnumber"/>
+        <result column="enrolldata" property="enrolldata"/>
+        <result column="usid" property="usid"/>
+        <result column="usersendid" property="usersendid"/>
+        <result column="usergetid" property="usergetid"/>
+    </resultMap>
+    
+ 
+  <insert id="insertEnroll" useGeneratedKeys="true" keyProperty="deviceEnroll.enrollarrayid" parameterType="com.hs.Device.model.DeviceEnrollArray">
+     insert into deviceenrollarray (usid,usersendid,usergetid,backupnumber,enrolldata) values(#{deviceEnroll.usid},#{deviceEnroll.usersendid},#{deviceEnroll.usergetid},#{deviceEnroll.backupnumber},#{deviceEnroll.enrolldata});
+  </insert>
+    
+	<select id="selectbyusid" resultMap="deviceEnrollMapper" >
+	   select * from deviceenrollarray de where de.usid=#{usid};
+	</select>
+   
+   <delete id="deletebyid">
+      delete from deviceenrollarray where usid = #{usid};
+   </delete> 
+   
+   <delete id="deleteallenroll">
+      delete from deviceenrollarray where usid is not null;
+   </delete>
+   
+   <!-- send -->
+    <select id="selectbysendid" resultMap="deviceEnrollMapper">
+        select * from deviceenrollarray where usersendid=#{usersendid};
+    </select>
+    
+    <!-- get -->
+    <select id="selectbygetid" resultMap="deviceEnrollMapper">
+        select * from deviceenrollarray where usergetid=#{usergetid};
+    </select>
+    
+</mapper>

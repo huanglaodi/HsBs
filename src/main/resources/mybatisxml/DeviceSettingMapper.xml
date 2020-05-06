@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.DeviceSettingMapper">
+    
+    <resultMap id="devcestmapper" type="com.hs.Device.model.DeviceSetting" >
+        <id column="devstid" property="devstid"/>
+        <result column="usergetid" property="usergetid"/>
+        <result column="alarmDelay" property="alarmDelay"/>
+        <result column="antiPass"  property="antiPass"/>
+        <result column="devName"  property="devName"/>
+        <result column="intervals"  property="interval"/>
+        <result column="language"  property="language"/>
+        <result column="openDoorDelay"  property="openDoorDelay"/>
+        <result column="reverifyTime"  property="reverifyTime"/>
+        <result column="screensaversTime"  property="screensaversTime"/>
+        <result column="serverHost"  property="serverHost"/>
+        <result column="serverPort"  property="serverPort"/>
+        <result column="sleepTime"  property="sleepTime"/>
+        <result column="tamperAlarm"  property="tamperAlarm"/>
+        <result column="volume"  property="volume"/>
+        <result column="wiegandType"  property="wiegandType"/>
+        <result column="pushServerHost"  property="pushServerHost"/>
+        <result column="pushServerPort"  property="pushServerPort"/>
+        <result column="pushEnable"  property="pushEnable"/>
+        <result column="verifyMode"  property="verifyMode"/>
+    </resultMap>
+    
+    <insert id="insertdevst" useGeneratedKeys="true" keyProperty="devicesetting.devstid" parameterType="com.hs.Device.model.DeviceSetting">
+      insert into devicesetting (usergetid,alarmDelay,antiPass,devName,intervals,language,openDoorDelay,reverifyTime,screensaversTime,serverHost,serverPort,sleepTime,tamperAlarm,volume,wiegandType,pushServerHost,
+      pushServerPort,pushEnable,verifyMode) 
+      values (#{devicesetting.usergetid},#{devicesetting.alarmDelay},#{devicesetting.antiPass},#{devicesetting.devName},#{devicesetting.interval},#{devicesetting.language},#{devicesetting.openDoorDelay},
+      #{devicesetting.reverifyTime},#{devicesetting.screensaversTime},#{devicesetting.serverHost},#{devicesetting.serverPort},#{devicesetting.sleepTime},#{devicesetting.tamperAlarm},#{devicesetting.volume},
+      #{devicesetting.wiegandType},#{devicesetting.pushServerHost},#{devicesetting.pushServerPort},#{devicesetting.pushEnable},#{devicesetting.verifyMode});
+    </insert>
+    
+   <select id="selectbygetid" resultMap="devcestmapper">
+     select * from devicesetting ds where ds.usergetid=#{usergetid};
+   </select>
+    
+</mapper>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.UsersMapper">
+    
+    <resultMap id="usersmapper" type="com.hs.Device.model.Users" >
+        <id column="usid" property="usid"/>
+        <result column="usersendid" property="usersendid"/>
+        <result column="usergetid" property="usergetid"/>
+        <result column="devid" property="devid"/>
+        <result column="pkid" property="pkid"/>
+        <result column="userid" property="userid"/>
+        <result column="name" property="name"/>
+        <result column="privilege" property="privilege"/>
+        <result column="userphoto" property="userphoto"/>
+        <result column="card" property="card"/>
+        <result column="pwd" property="pwd"/>
+        <result column="face" property="face"/>
+        <result column="palm" property="palm"/>
+        <result column="photo" property="photo"/>
+        <result column="vaildstart" property="vaildstart"/>
+        <result column="vaildend" property="vaildend"/>
+        <result column="updates" property="updates"/>
+        <result column="data" property="data"/>
+        <result column="photoEnroll" property="photoEnroll"/>
+    </resultMap >
+    
+    <resultMap id="usersmapper2" type="com.hs.Device.model.Users" extends="usersmapper">
+        <collection property="listfps" column="usid"  ofType="com.hs.Device.model.Fps"  select="com.hs.Device.mapper.FpsMapper.selectfps"/>
+        <collection property="enrollarrays" column="usid" ofType="com.hs.Device.model.DeviceEnrollArray" select="com.hs.Device.mapper.DeviceEnrollArrayMapper.selectbyusid"/>
+    </resultMap>
+    
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="users.usid" parameterType="com.hs.Device.model.Users">
+       insert into users(usersendid,usergetid,devid,pkid,userid,name,privilege,userphoto,card,pwd,face,palm,photo,vaildstart,vaildend,updates,data,photoEnroll) values (#{users.usersendid},
+       #{users.usergetid},#{users.devid},#{users.pkid},#{users.userid},#{users.name},#{users.privilege},#{users.userphoto},#{users.card},#{users.pwd},#{users.face},#{users.palm},
+       #{users.photo},#{users.vaildstart},#{users.vaildend},#{users.updates},#{users.data},#{users.photoEnroll});
+    </insert>
+    
+    <select id="selectbydvidanduid" resultMap="usersmapper" parameterType="com.hs.Device.model.Users">
+        select * from users u where u.devid=#{users.devid} and u.userid=#{users.userid};
+    </select>
+    
+    <delete id="deletealluser">
+       delete from users where devid=#{devid};
+    </delete>
+    
+    <delete id="deleteuserbyuserid" parameterType="com.hs.Device.model.Users">
+       delete from users where userid=#{users.userid} and devid=#{users.devid};
+    </delete>
+    
+    <delete id="deleteuserbyuid" parameterType="com.hs.Device.model.Users">
+       delete from users where usid=#{users.usid};
+    </delete>
+  
+  <!-- V536 -->
+  <update id="updateuser" parameterType="com.hs.Device.model.Users">
+     update users u
+    <set>
+        <if test="users.devid != null">
+			u.devid = #{users.devid},
+		</if>
+		<if test="users.userid!= null">
+			u.userid = #{users.userid},
+		</if>
+		<if test="users.name != null">
+			u.name = #{users.name},
+		</if>
+		<if test="users.privilege != null">
+			u.privilege = #{users.privilege},
+		</if>
+		<if test="users.card != null">
+			u.card = #{users.card},
+		</if>
+		<if test="users.pwd != null">
+			u.pwd = #{users.pwd},
+		</if>
+		<if test="users.face != null">
+			u.face = #{users.face},
+		</if>
+		<if test="users.palm!= null">
+			u.palm = #{users.palm},
+		</if>
+		<if test="users.photo != null">
+			u.photo = #{users.photo},
+		</if>
+		<if test="users.vaildstart != null">
+			u.vaildstart = #{users.vaildstart},
+		</if>
+		<if test="users.vaildend != null">
+			u.vaildend = #{users.vaildend},
+		</if>
+		<if test="users.updates != null">
+			u.updates = #{users.updates},
+		</if>
+		<if test="users.data != null">
+			u.data = #{users.data},
+		</if>
+		<if test="users.photoEnroll != null">
+			u.photoEnroll = #{users.photoEnroll},
+		</if>
+		
+		</set>
+     where u.userid=#{users.userid} and u.devid=#{users.devid};
+  </update>
+  
+  <select id="selectbysendid" resultMap="usersmapper2">
+     select * from users u where u.usersendid = #{usersendid};
+  </select>
+  
+  <select id="selectbygetid" resultMap="usersmapper2">
+     select * from users u where u.usergetid = #{usergetid};
+    </select>
+     
+   <select id="selectallusers" resultMap="usersmapper2">
+     select * from users u where u.devid = #{devid}; 
+   </select>
+   
+   <select id="selectbypkid" resultMap="usersmapper2">
+     select * from users u where u.pkid = #{pkid}; 
+   </select>
+   
+   <select id="selectbyusid" resultMap="usersmapper2">
+     select * from users u where u.usid = #{usid}; 
+   </select>
+    
+</mapper>

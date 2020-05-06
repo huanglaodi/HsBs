@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.DeleteUserMapper">
+    
+    <resultMap id="deleteusermapper" type="com.hs.Device.model.DeleteUser" >
+        <id column="deleteid" property="deleteid"/>
+        <result column="usergetid" property="usergetid"/>
+        <result column="usersid" property="usersid"/>
+        
+    </resultMap>
+    
+    <select id="selectbygetid" resultMap="deleteusermapper">
+       select * from deleteuser where usergetid=#{usergetid};
+    </select>
+    
+    <insert id="insertdluser" keyProperty="device.deviceid" useGeneratedKeys="true" parameterType="com.hs.Device.model.DeleteUser">
+       insert into deleteuser (usergetid,usersid) values(#{deleteuser.usergetid},#{deleteuser.usersid});
+      
+    </insert>
+
+    
+</mapper>

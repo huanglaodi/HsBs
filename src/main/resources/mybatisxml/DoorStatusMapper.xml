@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.DoorStatusMapper">
+    
+    <resultMap id="doorstatusmapper" type="com.hs.Device.model.DoorStatus" >
+        <id column="doorstatusid" property="doorstatusid"/>
+        <result column="usersendid" property="usersendid"/>
+        <result column="doorstatus" property="doorstatus"/>
+        
+    </resultMap>
+   
+    
+    <insert id="insertdoorst" keyProperty="doorstatus.doorstatusid" useGeneratedKeys="true" parameterType="com.hs.Device.model.DoorStatus">
+       insert into doorstatus (usersendid,doorstatus) values(#{doorstatus.usersendid},#{doorstatus.doorstatus});
+      
+    </insert>
+
+ 
+    <select id="selectbysendid" resultMap="doorstatusmapper">
+       select * from doorstatus where usersendid=#{usersendid};
+    </select>
+    
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.PackagesMapper">
+    
+    <resultMap id="packagesmapper" type="com.hs.Device.model.Packages" >
+        <id column="pkid" property="pkid"/>
+        <result column="usergetid" property="usergetid"/>
+        <result column="packageid" property="packageid"/>
+        <result column="alllogcount" property="alllogcount"/>
+        <result column="logscount" property="logscount"/>
+        <result column="userscount" property="userscount"/>
+    </resultMap>
+    
+    <resultMap id="packagesmapper2" type="com.hs.Device.model.Packages"  extends="packagesmapper">
+        <collection property="userslist" column="pkid" ofType="com.hs.Device.model.Users" select="com.hs.Device.mapper.UsersMapper.selectbypkid"/> 
+        <collection property="logs" column="pkid" ofType="com.hs.Device.model.DeviceLog" select="com.hs.Device.mapper.DeviceLogMapper.getlogbypkid"/> 
+        <collection property="lsuid" column="pkid" ofType="com.hs.Device.model.UserIdList" select="com.hs.Device.mapper.UserIdListMapper.selectbypkid"/> 
+    </resultMap>
+    
+    
+    <insert id="insertpackage" keyProperty="packages.pkid" useGeneratedKeys="true" parameterType="com.hs.Device.model.Packages">
+       insert into packages (usergetid,packageid,alllogcount,logscount,userscount) values(#{packages.usergetid},#{packages.packageid},
+       #{packages.alllogcount},#{packages.logscount},#{packages.userscount});
+      
+    </insert>
+    
+    <select id="selectpagbygetid" resultMap="packagesmapper2">
+       select * from packages where usergetid=#{usergetid};
+    </select>
+
+    
+</mapper>

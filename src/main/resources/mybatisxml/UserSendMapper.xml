@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.UserSendMapper">
+    
+    <resultMap id="usersendmapper" type="com.hs.Device.model.UserSend" >
+        <id column="usersendid" property="usersendid"/>
+        <result column="taskid" property="taskid"/>
+        <result column="time" property="time"/>
+        <result column="begintime" property="begintime"/>
+        <result column="endtime" property="endtime"/>
+        <result column="userid" property="userid"/>
+        <result column="username" property="username"/>
+        <result column="userprivilege" property="userprivilege"/>
+        <result column="userphoto" property="userphoto"/>
+        <result column="fkname" property="fkname"/>
+        <result column="serverip" property="serverip"/>
+        <result column="serverport" property="serverport"/>
+        <result column="firmwarefilename" property="firmwarefilename"/>
+        <result column="firmwarebindata" property="firmwarebindata"/>
+        <result column="data" property="data"/>
+        <result column="usersid" property="usersid"/>
+        <result column="userscount" property="userscount"/>
+        <result column="firmwarefileurl" property="firmwarefileurl"/>
+        <result column="feature" property="feature"/>
+        <result column="paramskey" property="paramskey"/>
+        <result column="paramsval" property="paramsval"/>
+        <result column="backupnumber" property="backupnumber"/>
+        <result column="timezoneno" property="timezoneno"/>
+    </resultMap>
+    
+    <resultMap id="usersendmapper2"  type="com.hs.Device.model.UserSend" extends="usersendmapper">
+        <collection property="listenroll" column="usersendid" ofType="com.hs.Device.model.DeviceEnrollArray" select="com.hs.Device.mapper.DeviceEnrollArrayMapper.selectbysendid"/>
+        <collection property="listusers" column="usersendid" ofType="com.hs.Device.model.Users" select="com.hs.Device.mapper.UsersMapper.selectbysendid"/>
+        <collection property="listtimezone" column="usersendid" ofType="com.hs.Device.model.TimeZone" select="com.hs.Device.mapper.TimeZoneMapper.selectbysendid"/>
+        <collection property="listparsetime" column="usersendid" ofType="com.hs.Device.model.UserParseTime" select="com.hs.Device.mapper.UserParseTimeMapper.selectbysendid"/>
+        <collection property="listdoorsetting" column="usersendid" ofType="com.hs.Device.model.DoorSetting" select="com.hs.Device.mapper.DoorSettingMapper.selectbysendid"/>
+        <collection property="listdoorstatus" column="usersendid" ofType="com.hs.Device.model.DoorStatus" select="com.hs.Device.mapper.DoorStatusMapper.selectbysendid"/>
+    </resultMap>
+    
+    <select id="selectbytaskid" resultMap="usersendmapper2">
+        select * from usersend where taskid=#{taskid};
+    </select>
+    
+    <insert id="insertUsersend" keyProperty="usersend.usersendid"  useGeneratedKeys="true" parameterType="com.hs.Device.model.UserSend">
+        insert into usersend (taskid,time,begintime,endtime,userid,username,userprivilege,userphoto,fkname,serverip,serverport,firmwarefilename,firmwarebindata,data,usersid,userscount,firmwarefileurl,feature,paramskey,paramsval,backupnumber,timezoneno) 
+        values (#{usersend.taskid},#{usersend.time},#{usersend.begintime},#{usersend.endtime},#{usersend.userid},#{usersend.username},#{usersend.userprivilege},#{usersend.userphoto},#{usersend.fkname},#{usersend.serverip},
+        #{usersend.serverport},#{usersend.firmwarefilename},#{usersend.firmwarebindata},#{usersend.data},#{usersend.usersid},#{usersend.userscount},#{usersend.firmwarefileurl},#{usersend.feature},#{usersend.paramskey},#{usersend.paramsval},#{usersend.backupnumber},#{usersend.timezoneno});
+    </insert>
+  
+  
+    
+</mapper>

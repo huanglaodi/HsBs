@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.UserGetMapper">
+    
+    <resultMap id="usergetmapper" type="com.hs.Device.model.UserGet" >
+        <id column="usergetid" property="usergetid"/>
+        <result column="taskid" property="taskid"/>
+        
+    </resultMap>
+    
+    <resultMap id="usergetmapper2"  type="com.hs.Device.model.UserGet" extends="usergetmapper">
+        <collection property="users" column="usergetid" ofType="com.hs.Device.model.Users" select="com.hs.Device.mapper.UsersMapper.selectbygetid"/>
+        <collection property="logs" column="usergetid" ofType="com.hs.Device.model.DeviceLog" select="com.hs.Device.mapper.DeviceLogMapper.getlogbygetid"/>
+        <collection property="devicestates" column="usergetid" ofType="com.hs.Device.model.DeviceState" select="com.hs.Device.mapper.DeviceStateMapper.selectdvstate"/>
+        <collection property="packages" column="usergetid" ofType="com.hs.Device.model.Packages" select="com.hs.Device.mapper.PackagesMapper.selectpagbygetid"/>
+        <collection property="deviceinfo" column="usergetid" ofType="com.hs.Device.model.DeviceInfo" select="com.hs.Device.mapper.DeviceInfoMapper.selectbygetid"/>
+        <collection property="dlusers" column="usergetid" ofType="com.hs.Device.model.DeleteUser" select="com.hs.Device.mapper.DeleteUserMapper.selectbygetid"/>
+        <collection property="listuid" column="usergetid" ofType="com.hs.Device.model.UserIdList" select="com.hs.Device.mapper.UserIdListMapper.selectbygetid"/>
+        <collection property="devsts" column="usergetid" ofType="com.hs.Device.model.DeviceSetting" select="com.hs.Device.mapper.DeviceSettingMapper.selectbygetid"/>
+        <collection property="timezones" column="usergetid" ofType="com.hs.Device.model.TimeZone" select="com.hs.Device.mapper.TimeZoneMapper.selectbygetid"/>
+        <collection property="parsetimes" column="usergetid" ofType="com.hs.Device.model.UserParseTime" select="com.hs.Device.mapper.UserParseTimeMapper.selectbygetid"/>
+        <collection property="doorsettings" column="usergetid" ofType="com.hs.Device.model.DoorSetting" select="com.hs.Device.mapper.DoorSettingMapper.selectbygetid"/>
+     </resultMap>
+    
+    <insert id="insertuserget" keyProperty="userget.usergetid"  useGeneratedKeys="true" parameterType="com.hs.Device.model.UserGet">
+        insert into userget(taskid) values (#{userget.taskid});
+    </insert>
+    
+     <select id="selectbytaskid" resultMap="usergetmapper2">
+        select * from userget where taskid=#{taskid};
+    </select>
+  
+  
+    
+</mapper>

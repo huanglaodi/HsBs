@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.DeviceStateMapper">
+    
+    <resultMap id="devicestatemapper" type="com.hs.Device.model.DeviceState" >
+        <id column="devicestateid" property="devicestateid"/>
+        <result column="usergetid" property="usergetid"/>
+        <result column="alllogcount" property="alllogcount"/>
+        <result column="facecount" property="facecount"/>
+        <result column="facemax" property="facemax"/>
+        <result column="fpcount" property="fpcount"/>
+        <result column="fpmax" property="fpmax"/>
+        <result column="idcardcount" property="idcardcount"/>
+        <result column="idcardmax" property="idcardmax"/>
+        <result column="managercount" property="managercount"/>
+        <result column="managermax" property="managermax"/>
+        <result column="passwordcount" property="passwordcount"/>
+        <result column="passwordmax" property="passwordmax"/>
+        <result column="pvcount" property="pvcount"/>
+        <result column="pvmax" property="pvmax"/>
+        <result column="totallogcount" property="totallogcount"/>
+        <result column="totallogmax" property="totallogmax"/>
+        <result column="usercount" property="usercount"/>
+        <result column="usermax" property="usermax"/>
+        <result column="isonline" property="isonline"/>
+        <result column="lasttime" property="lasttime"/>
+    </resultMap>
+    
+    
+    <insert id="insertdvstate" keyProperty="devicestate.devicestateid" useGeneratedKeys="true" parameterType="com.hs.Device.model.DeviceState">
+       insert into devicestate (usergetid,alllogcount,facecount,facemax,fpcount,fpmax,idcardcount,idcardmax,managercount,managermax,passwordcount,
+       passwordmax,pvcount,pvmax,totallogcount,totallogmax,usercount,usermax,isonline,lasttime) values(#{devicestate.usergetid},#{devicestate.alllogcount},#{devicestate.facecount},
+       #{devicestate.facemax},#{devicestate.fpcount},#{devicestate.fpmax},#{devicestate.idcardcount},#{devicestate.idcardmax},#{devicestate.managercount},#{devicestate.managermax},#{devicestate.passwordcount},
+       #{devicestate.passwordmax},#{devicestate.pvcount},#{devicestate.pvmax},#{devicestate.totallogcount},#{devicestate.totallogmax},#{devicestate.usercount},#{devicestate.usermax},#{devicestate.isonline},#{devicestate.lasttime});
+      
+    </insert>
+    
+      <select id="selectdvstate" resultMap="devicestatemapper">
+       select * from devicestate where usergetid=#{usergetid};
+    </select>
+
+    
+</mapper>

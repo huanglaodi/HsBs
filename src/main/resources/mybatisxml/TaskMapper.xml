@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.TaskMapper">
+    
+    <resultMap id="taskmapper" type="com.hs.Device.model.Task" >
+        <id column="taskid" property="taskid"/>
+        <result column="starttime" property="starttime"/>
+        <result column="endtime" property="endtime"/>
+        <result column="userid" property="userid"/>
+        <result column="instructid" property="instructid"/>
+        <result column="state" property="state"/>
+        <result column="deviceid" property="deviceid"/>
+        <result column="issend" property="issend"/>
+    </resultMap>
+    
+    <resultMap id="taskmapper2" type="com.hs.Device.model.Task" extends="taskmapper">
+       <association property="device" column="deviceid" javaType="com.hs.Device.model.Device" select="com.hs.Device.mapper.DeviceMapper.selectdevicebyid"/>
+       <association property="user" column="userid" javaType="com.hs.Device.model.User" select="com.hs.Device.mapper.UserMapper.selectuserbyid"/>
+       <association property="instruct" column="instructid" javaType="com.hs.Device.model.Instruct" select="com.hs.Device.mapper.InstructMapper.selectinstructbyid"/>
+       <collection property="usersends" column="taskid" ofType="com.hs.Device.model.UserSend" select="com.hs.Device.mapper.UserSendMapper.selectbytaskid"/>
+    </resultMap>
+    
+    <resultMap id="taskmapper3" type="com.hs.Device.model.Task" extends="taskmapper">
+       <association property="device" column="deviceid" javaType="com.hs.Device.model.Device" select="com.hs.Device.mapper.DeviceMapper.selectdevicebyid"/>
+       <association property="user" column="userid" javaType="com.hs.Device.model.User" select="com.hs.Device.mapper.UserMapper.selectuserbyid"/>
+       <association property="instruct" column="instructid" javaType="com.hs.Device.model.Instruct" select="com.hs.Device.mapper.InstructMapper.selectinstructbyid"/>
+       <collection property="usergets" column="taskid" ofType="com.hs.Device.model.UserGet" select="com.hs.Device.mapper.UserGetMapper.selectbytaskid"/>
+    </resultMap>
+    
+    <!-- 查询当前用户是否有给相同设备发送的相同未执行指令 -->
+    <select id="selectTask" resultMap="taskmapper2">
+        select * from task t where t.deviceid=#{task.deviceid} and t.userid=#{task.userid} and t.instructid=#{task.instructid} and t.state="WAIT";
+       
+    </select>
+    
+    <!-- 查询当前用户是否有已经被机器执行完成未推送给用户的指令 -->
+     <select id="selectTaskbyuserid" resultMap="taskmapper3">
+        select * from task t where t.userid=#{userid} and t.issend=1 and (t.state="OK" or t.state="ERROR");
+       
+    </select>
+    
+   
+     <!-- 查询当前设备是否有处于WAIT的指令 -->
+     <select id="selectbydeviceid" resultMap="taskmapper2">
+        select * from task t where t.deviceid=#{deviceid} and t.state="WAIT";
+       
+    </select>
+    
+    
+    <!-- 根据taskid查询Task -->
+     <select id="getTaskbytaskid" resultMap="taskmapper2">
+        select * from task t where t.taskid=#{taskid};
+       
+    </select>
+  
+  <insert id="insertTask" useGeneratedKeys="true" keyProperty="task.taskid" parameterType="com.hs.Device.model.Task">
+     insert into task (starttime,userid,instructid,state,deviceid,issend) values(#{task.starttime},#{task.userid},#{task.instructid},#{task.state},#{task.deviceid},#{task.issend});
+  </insert>
+    
+<update id="updateTask" parameterType="com.hs.Device.model.Task">
+    update task t 
+       <set>
+	    <if test="task.state != null">
+		    t.state = #{task.state},
+		</if>
+		<if test="task.endtime != null">
+			t.endtime = #{task.endtime},
+		</if>
+		<if test="task.issend != null">
+			t.issend = #{task.issend},
+		</if>
+		</set>
+     where t.taskid=#{task.taskid}
+</update>
+    
+</mapper>

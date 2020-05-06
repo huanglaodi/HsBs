@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.InstructMapper">
+    <resultMap id="instructmapper" type="com.hs.Device.model.Instruct" >
+        <id column="instructid" property="instructid"/>
+        <result column="instructname" property="instructname"/>
+    </resultMap>
+
+    
+    <select id="selectinstructbyid" resultMap="instructmapper">
+       select * from instruct where instructid=#{instructid};
+    </select>
+    
+
+    
+</mapper>

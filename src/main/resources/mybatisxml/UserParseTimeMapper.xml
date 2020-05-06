@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.UserParseTimeMapper">
+    
+    <resultMap id="userparsetimemapper" type="com.hs.Device.model.UserParseTime" >
+        <id column="parsetimeid" property="parsetimeid"/>
+        <result column="usersendid" property="usersendid"/>
+        <result column="usergetid" property="usergetid"/>
+        <result column="userid" property="userid"/>
+        <result column="validedatestart" property="validedatestart"/>
+        <result column="validedateend" property="validedateend"/>
+        <result column="weekno" property="weekno"/>
+    </resultMap >
+    
+ <insert id="insertuserparsetime" keyProperty="userparsetime.parsetimeid" useGeneratedKeys="true" parameterType="com.hs.Device.model.UserParseTime">
+     insert into userparsetime (usersendid,usergetid,userid,validedatestart,validedateend,weekno) values(#{userparsetime.usersendid},#{userparsetime.usergetid},
+     #{userparsetime.userid},#{userparsetime.validedatestart},#{userparsetime.validedateend},#{userparsetime.weekno});
+ </insert>
+
+<select id="selectbysendid" resultMap="userparsetimemapper">
+   select * from userparsetime where usersendid = #{usersendid};
+</select>
+
+<select id="selectbygetid" resultMap="userparsetimemapper">
+   select * from userparsetime where usergetid = #{usergetid};
+</select>
+    
+</mapper>

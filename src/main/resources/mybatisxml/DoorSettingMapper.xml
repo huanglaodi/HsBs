@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hs.Device.mapper.DoorSettingMapper">
+    
+    <resultMap id="doorsettingmapper" type="com.hs.Device.model.DoorSetting">
+        <id column="doorsettingid" property="doorsettingid"/>
+        <result column="usersendid" property="usersendid"/>
+        <result column="usergetid" property="usergetid"/>
+        <result column="opendoordelay" property="openDoor_Delay"/>
+        <result column="doormagnetictype" property="doorMagnetic_Type"/>
+        <result column="doormagneticdelay" property="doorMagnetic_Delay"/>
+        <result column="antiback" property="anti_back"/>
+        <result column="alarmdelay" property="alarm_Delay"/>
+        <result column="usealarm" property="use_Alarm"/>
+        <result column="wiegandtype" property="wiegand_Type"/>
+        <result column="sleeptime" property="sleep_Time"/>
+        <result column="screensaverstime" property="screensavers_Time"/>
+        <result column="reverifytime" property="reverify_Time"/>
+        <result column="glogwarning" property="glog_Warning"/>
+        <result column="volume" property="volume"/>
+    </resultMap >
+    
+ <insert id="insertdoorsetting" keyProperty="doorsetting.doorsettingid" useGeneratedKeys="true" parameterType="com.hs.Device.model.DoorSetting">
+     insert into doorsetting (usersendid,usergetid,opendoordelay,doormagnetictype,doormagneticdelay,antiback,alarmdelay,usealarm,wiegandtype,sleeptime,screensaverstime,reverifytime,glogwarning,volume) 
+     values(#{doorsetting.usersendid},#{doorsetting.usergetid},#{doorsetting.openDoor_Delay},#{doorsetting.doorMagnetic_Type},#{doorsetting.doorMagnetic_Delay},#{doorsetting.anti_back},#{doorsetting.alarm_Delay},
+     #{doorsetting.use_Alarm},#{doorsetting.wiegand_Type},#{doorsetting.sleep_Time},#{doorsetting.screensavers_Time},#{doorsetting.reverify_Time},#{doorsetting.glog_Warning},#{doorsetting.volume});
+ </insert>
+
+<select id="selectbysendid" resultMap="doorsettingmapper">
+   select * from doorsetting where usersendid = #{usersendid};
+</select>
+
+<select id="selectbygetid" resultMap="doorsettingmapper">
+   select * from doorsetting where usergetid = #{usergetid};
+</select>
+    
+</mapper>
